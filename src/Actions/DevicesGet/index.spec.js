@@ -51,7 +51,7 @@ describe('DeviceGet Actions', () => {
 
     const store = mockStore({devices: {}})
 
-    it('should dispatch MESHBLU_DEVICE_GET_SUCCESS', () => {
+    it('should dispatch MESHBLU_DEVICES_GET_SUCCESS', () => {
       return store.dispatch(getDevice('roger-tago-uuid', meshbluConfig))
         .then(() => {
           expect(store.getActions()).to.deep.equal(expectedActions)
@@ -75,7 +75,7 @@ describe('DeviceGet Actions', () => {
     ]
     const store = mockStore({ devices: {} })
 
-    it('should dispatch MESHBLU_DEVICE_GET_FAILURE', () => {
+    it('should dispatch MESHBLU_DEVICES_GET_FAILURE', () => {
       return store.dispatch(getDevice('bad-device-uuid', meshbluConfig))
         .catch(() => {
           expect(store.getActions()).to.deep.equal(expectedActions)

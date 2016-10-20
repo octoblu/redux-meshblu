@@ -1,9 +1,9 @@
 import MeshbluHttp from 'browser-meshblu-http'
 import { createAction } from 'redux-act'
 
-export const getDeviceRequest = createAction('meshblu/device/get/request')
-export const getDeviceSuccess = createAction('meshblu/device/get/success')
-export const getDeviceFailure = createAction('meshblu/device/get/failure')
+export const getDeviceRequest = createAction('meshblu/devices/get/request')
+export const getDeviceSuccess = createAction('meshblu/devices/get/success')
+export const getDeviceFailure = createAction('meshblu/devices/get/failure')
 
 export default function getDevice(deviceUuid, meshbluConfig) {
   return dispatch => {
