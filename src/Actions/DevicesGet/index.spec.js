@@ -4,16 +4,12 @@ import thunk from 'redux-thunk'
 import enableDestroy from 'server-destroy'
 import shmock from 'shmock'
 
-import getDevice, {
-  getDeviceRequest,
-  getDeviceSuccess,
-  getDeviceFailure,
-} from './'
+import getDevice, {getDeviceRequest, getDeviceSuccess, getDeviceFailure} from './'
 
 const middlewares = [thunk]
 const mockStore = configureMockStore(middlewares)
 
-describe('DeviceGet Actions', () => {
+describe('DevicesGet Actions', () => {
   let meshbluMock
   let meshbluConfig
   let userAuth
