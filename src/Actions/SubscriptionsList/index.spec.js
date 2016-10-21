@@ -56,7 +56,7 @@ describe('SubscriptionsList Actions', () => {
     const store = mockStore({devices: {}})
 
     it('should dispatch MESHBLU_SUBSCRIPTIONS_LIST_SUCCESS', () => {
-      return store.dispatch(listSubscriptions('roger-tago-uuid', meshbluConfig))
+      return store.dispatch(listSubscriptions({uuid: 'roger-tago-uuid', meshbluConfig}))
         .then(() => {
           expect(store.getActions()).to.deep.equal(expectedActions)
         })
@@ -80,7 +80,7 @@ describe('SubscriptionsList Actions', () => {
     const store = mockStore({ devices: {} })
 
     it('should dispatch MESHBLU_SUBSCRIPTIONS_LIST_FAILURE', () => {
-      return store.dispatch(listSubscriptions('bad-device-uuid', meshbluConfig))
+      return store.dispatch(listSubscriptions({uuid: 'bad-device-uuid', meshbluConfig}))
         .catch(() => {
           expect(store.getActions()).to.deep.equal(expectedActions)
         })

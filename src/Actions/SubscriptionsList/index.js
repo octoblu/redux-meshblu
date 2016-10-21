@@ -5,14 +5,14 @@ export const listSubscriptionsRequest = createAction('meshblu/subscriptions/list
 export const listSubscriptionsSuccess = createAction('meshblu/subscriptions/list/success')
 export const listSubscriptionsFailure = createAction('meshblu/subscriptions/list/failure')
 
-export default function listSubscriptions(deviceUuid, meshbluConfig) {
+export default function listSubscriptions({uuid, meshbluConfig}) {
   return dispatch => {
     dispatch(listSubscriptionsRequest())
 
     return new Promise((resolve, reject) => {
       const meshblu = new MeshbluHttp(meshbluConfig)
 
-      meshblu.listSubscriptions({subscriberUuid: deviceUuid}, (error, device) => {
+      meshblu.listSubscriptions({subscriberUuid: uuid}, (error, device) => {
         if (error) return reject(dispatch(listSubscriptionsFailure(new Error(error.message))))
         return resolve(dispatch(listSubscriptionsSuccess(device)))
       })
