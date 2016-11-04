@@ -9,8 +9,10 @@ npm install redux-meshblu --save
 ```
 
 ## Supported Actions
-- search
 - getDevice
+- search
+- update
+- updateDangerously
 
 ## Actions
 All actions are suffixed with the request state. Example: `getDevice` action has `getDeviceRequest`, `getDeviceSuccess`, `getDeviceFailure`
@@ -40,6 +42,32 @@ Search for Devices
   * `port` The port of the Meshblu server to connect to. (Default: `443`)
   * `uuid` UUID of the device to authenticate with.
   * `token` Token of the device to authenticate with.
+
+### update
+Updates a node or device currently registered with Meshblu that you have access to update. You can pass any key/value pairs to update object. This does a diff only (Equivalent to using $set and PUT)
+
+#### Arguments
+* `uuid` Meshblu device uuid
+* `body` An object containing the properties intended to update
+* `meshbluConfig` connection options with the following keys:
+  * `protocol` The protocol to use when connecting to the server. (Default `https`)
+  * `hostname` The hostname of the Meshblu server to connect to. (Default: `meshblu.octoblu.com`)
+  * `port` The port of the Meshblu server to connect to. (Default: `443`)
+  * `uuid` UUID of the device to authenticate with.
+  * `token` Token of the device to authenticate with.
+
+### updateDangerously
+Updates a node or device currently registered with Meshblu that you have access to update. You can pass any key/value pairs to update object. PUT expects a complete representation of the device, so all omitted keys will be removed on save with the exception of the UUID. Allows the use of $set, $inc, $push, etc. operators as documented in the MongoDB API
+
+#### Arguments
+* `uuid` Meshblu device uuid
+* `body` An object containing the properties intended to update
+* `meshbluConfig` connection options with the following keys:
+* `protocol` The protocol to use when connecting to the server. (Default `https`)
+* `hostname` The hostname of the Meshblu server to connect to. (Default: `meshblu.octoblu.com`)
+* `port` The port of the Meshblu server to connect to. (Default: `443`)
+* `uuid` UUID of the device to authenticate with.
+* `token` Token of the device to authenticate with.
 
 
 ## Usage
@@ -131,6 +159,4 @@ export default function types(state = initialState, action) {
 - removeTokenByQuery
 - revokeToken
 - unregister
-- update
-- updateDangerously
 - whoami
