@@ -52,7 +52,7 @@ describe('Unregister Actions', () => {
     const store = mockStore({devices: {}})
 
     it('should dispatch success action', () => {
-      return store.dispatch(register({deviceData: {}, meshbluConfig}))
+      return store.dispatch(register({body: {}, meshbluConfig}))
         .then(() => {
           expect(store.getActions()).to.deep.equal(expectedActions)
         })
@@ -78,7 +78,7 @@ describe('Unregister Actions', () => {
       type: 'new-device-uuid'
     }
     it('should dispatch failure action', () => {
-      return store.dispatch(register({ deviceData: {}, meshbluConfig}))
+      return store.dispatch(register({ body: {}, meshbluConfig}))
         .catch(() => {
           expect(store.getActions()).to.deep.equal(expectedActions)
         })
