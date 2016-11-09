@@ -32,7 +32,7 @@ Returns all information (except the token) of a specific device or node.
 ### register
 Register a new device with data properties specified by the caller
 #### Arguments
-* `deviceData` data object containing properties of the new device.
+* `body` data object containing properties of the new device.
 * `meshbluConfig` connection options with the following keys:
   * `protocol` The protocol to use when connecting to the server. (Default `https`)
   * `hostname` The hostname of the Meshblu server to connect to. (Default: `meshblu.octoblu.com`)
