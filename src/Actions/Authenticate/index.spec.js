@@ -4,27 +4,29 @@ import thunk from 'redux-thunk'
 import enableDestroy from 'server-destroy'
 import shmock from 'shmock'
 
-import getDevice, {getDeviceRequest, getDeviceSuccess, getDeviceFailure} from './'
+import authenticate, {authenticateRequest, authenticateSuccess, authenticateFailure} from './'
 
 const middlewares = [thunk]
 const mockStore = configureMockStore(middlewares)
 
-describe('DevicesGet Actions', () => {
+describe('Authenticate Actions', () => {
   let meshbluMock
   let meshbluConfig
+  let userAuth
 
   before(() => {
+    meshbluMock = shmock()
+    enableDestroy(meshbluMock)
+
     meshbluConfig = {
       hostname: '127.0.0.1',
-      port: 0xd00d,
+      port: meshbluMock.address().port,
       protocol: 'http',
       uuid: 'my-user-uuid',
       token: 'my-user-token',
     }
 
-    meshbluMock = shmock(0xd00d)
-
-    enableDestroy(meshbluMock)
+    userAuth = new Buffer('my-user-uuid:my-user-token').toString('base64')
   })
 
   after((done) => {
@@ -34,19 +36,20 @@ describe('DevicesGet Actions', () => {
   describe('when the request succeeds', () => {
     beforeEach(() => {
       meshbluMock
-        .get('/v2/devices/roger-tago-uuid')
-        .reply(200, {uuid: 'roger-tago-uuid'})
+        .post('/authenticate')
+        .set('Authorization',  `Basic ${userAuth}`)
+        .reply(204)
     })
 
     const expectedActions = [
-      { type: getDeviceRequest.getType(), payload: undefined },
-      { type: getDeviceSuccess.getType(), payload: {uuid: 'roger-tago-uuid'} },
+      { type: authenticateRequest.getType(), payload: undefined },
+      { type: authenticateSuccess.getType(), payload: true },
     ]
 
     const store = mockStore({devices: {}})
 
-    it('should dispatch MESHBLU_DEVICES_GET_SUCCESS', () => {
-      return store.dispatch(getDevice({uuid: 'roger-tago-uuid', meshbluConfig}))
+    it('should dispatch MESHBLU_AUTHENTICATE_SUCCESS', () => {
+      return store.dispatch(authenticate({meshbluConfig}))
         .then(() => {
           expect(store.getActions()).to.deep.equal(expectedActions)
         })
@@ -56,21 +59,22 @@ describe('DevicesGet Actions', () => {
   describe('when the request fails', () => {
     beforeEach(() => {
       meshbluMock
-        .get('/v2/devices/bad-device-uuid')
+        .post('/authenticate')
+        .set('Authorization',  `Bearer ${userAuth}`)
         .reply(403, 'Forbidden')
     })
 
     const expectedActions = [
-      { type: getDeviceRequest.getType(), payload: undefined },
+      { type: authenticateRequest.getType(), payload: undefined },
       {
-        type: getDeviceFailure.getType(),
+        type: authenticateFailure.getType(),
         payload: new Error('Forbidden')
       },
     ]
     const store = mockStore({ devices: {} })
 
-    it('should dispatch MESHBLU_DEVICES_GET_FAILURE', () => {
-      return store.dispatch(getDevice({uuid: 'bad-device-uuid', meshbluConfig}))
+    it('should dispatch MESHBLU_AUTHENTICATE_FAILURE', () => {
+      return store.dispatch(authenticate({meshbluConfig}))
         .catch(() => {
           expect(store.getActions()).to.deep.equal(expectedActions)
         })

@@ -17,6 +17,17 @@ npm install redux-meshblu --save
 ## Actions
 All actions are suffixed with the request state. Example: `getDevice` action has `getDeviceRequest`, `getDeviceSuccess`, `getDeviceFailure`
 
+### authenticate
+Verify that a uuid & token are considered valid by Meshblu
+
+#### Arguments
+* `meshbluConfig` connection options with the following keys:
+  * `protocol` The protocol to use when connecting to the server. (Default `https`)
+  * `hostname` The hostname of the Meshblu server to connect to. (Default: `meshblu.octoblu.com`)
+  * `port` The port of the Meshblu server to connect to. (Default: `443`)
+  * `uuid` UUID of the device to authenticate with.
+  * `token` Token of the device to authenticate with.
+
 ### getDevice
 Returns all information (except the token) of a specific device or node.
 
