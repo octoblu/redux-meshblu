@@ -1,12 +1,11 @@
 {
   "name": "redux-meshblu",
-  "version": "4.5.0",
+  "version": "4.5.1",
   "description": "Redux Actions with a dose of Meshblu.",
   "main": "dist/bundle.js",
   "scripts": {
     "clean": "rimraf dist",
-    "build:webpack": "NODE_ENV=production webpack --config webpack.config.js",
-    "build": "npm run clean && npm run build:webpack",
+    "build": "env NODE_ENV=production webpack --config webpack.config.js -p",
     "lint": "eslint src",
     "lint:fix": "eslint src --fix",
     "test": "nyc --require babel-core/register --require babel-polyfill mocha",
@@ -49,7 +48,7 @@
     "webpack": "^2.2.1"
   },
   "dependencies": {
-    "browser-meshblu-http": "^6.4.3",
+    "browser-meshblu-http": "^6.4.4",
     "redux": "^3.5.2",
     "redux-act": "^1.1.1",
     "redux-thunk": "^2.2.0"

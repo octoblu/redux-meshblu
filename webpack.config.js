@@ -2,7 +2,7 @@ var path         = require('path');
 var webpack      = require('webpack');
 
 module.exports = {
-  devtool: 'eval',
+  devtool: 'source-map',
   entry: [
     './src/index'
   ],
@@ -23,18 +23,10 @@ module.exports = {
       }
     }),
     new webpack.NoEmitOnErrorsPlugin(),
-    new webpack.optimize.OccurrenceOrderPlugin(),
-    new webpack.optimize.UglifyJsPlugin({
-      compress: {
-        warnings: false
-      }
-    })
+    new webpack.optimize.OccurrenceOrderPlugin()
   ],
   resolve: {
-    extensions: ['.js', '.jsx', '.json'],
-    alias: {
-      config: path.join(__dirname, 'src', 'config', 'production')
-    }
+    extensions: ['.js', '.jsx', '.json']
   },
   module: {
     loaders: [
